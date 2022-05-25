@@ -100,10 +100,10 @@ mod tests {
 
     const TEST_CONFIG_VALID: &'static str = r#"
 [global]
-server_url = "https://core.idcontact.test.tweede.golf"
+server_url = "https://core.verderhelpen.test.tweede.golf"
 internal_url = "http://core:8000"
 internal_secret = "sample_secret_1234567890178901237890"
-ui_tel_url = "https://poc.idcontact.test.tweede.golf/tel/"
+ui_tel_url = "https://poc.verderhelpen.test.tweede.golf/tel/"
 
 [global.ui_signing_privkey]
 type = "RSA"

@@ -1,7 +1,6 @@
 use crate::error::Error;
 use crate::methods::{AuthenticationMethod, CommunicationMethod, Method};
 use crate::start::StartRequestAuthOnly;
-use id_contact_jwt::SignKeyConfig;
 use josekit::jws::JwsVerifier;
 use josekit::jwt::decode_with_verifier_selector;
 use josekit::{
@@ -15,6 +14,7 @@ use serde::Deserialize;
 use std::collections::HashMap;
 use std::convert::TryFrom;
 use std::fmt::Debug;
+use verder_helpen_jwt::SignKeyConfig;
 
 #[derive(Debug, Deserialize, Clone)]
 pub struct Purpose {
@@ -293,10 +293,10 @@ mod tests {
     // Test data
     const TEST_CONFIG_VALID: &'static str = r#"
 [global]
-server_url = "https://core.idcontact.test.tweede.golf"
+server_url = "https://core.verderhelpen.test.tweede.golf"
 internal_url = "http://core:8000"
 internal_secret = "sample_secret_1234567890178901237890"
-ui_tel_url = "https://poc.idcontact.test.tweede.golf/tel/"
+ui_tel_url = "https://poc.verderhelpen.test.tweede.golf/tel/"
 
 [global.ui_signing_privkey]
 type = "RSA"
@@ -392,10 +392,10 @@ allowed_comm = [ "call" ]
 "#;
     const TEST_CONFIG_INVALID_METHOD_COMM: &'static str = r#"
 [global]
-server_url = "https://core.idcontact.test.tweede.golf"
+server_url = "https://core.verderhelpen.test.tweede.golf"
 internal_url = "http://core:8000"
 internal_secret = "sample_secret_1234567890178901237890"
-ui_tel_url = "https://poc.idcontact.test.tweede.golf/tel/"
+ui_tel_url = "https://poc.verderhelpen.test.tweede.golf/tel/"
 
 [global.ui_signing_privkey]
 type = "RSA"
@@ -477,10 +477,10 @@ allowed_comm = [ "call" ]
 "#;
     const TEST_CONFIG_INVALID_METHOD_AUTH: &'static str = r#"
 [global]
-server_url = "https://core.idcontact.test.tweede.golf"
+server_url = "https://core.verderhelpen.test.tweede.golf"
 internal_url = "http://core:8000"
 internal_secret = "sample_secret_1234567890178901237890"
-ui_tel_url = "https://poc.idcontact.test.tweede.golf/tel/"
+ui_tel_url = "https://poc.verderhelpen.test.tweede.golf/tel/"
 
 [global.ui_signing_privkey]
 type = "RSA"

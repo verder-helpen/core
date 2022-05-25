@@ -8,9 +8,9 @@ use josekit::{
 
 use super::{Method, Tag};
 use crate::error::Error;
-use id_contact_proto::{StartAuthRequest, StartAuthResponse};
 use rocket::{response::Redirect, State};
 use serde::Deserialize;
+use verder_helpen_proto::{StartAuthRequest, StartAuthResponse};
 
 #[derive(Debug, Deserialize, Clone)]
 pub struct AuthenticationMethod {
@@ -172,18 +172,18 @@ pub async fn auth_attr_shim(
 mod tests {
     use figment::providers::{Format, Toml};
     use httpmock::MockServer;
-    use id_contact_proto::StartAuthRequest;
     use rocket::{figment::Figment, local::blocking::Client};
     use serde_json::json;
+    use verder_helpen_proto::StartAuthRequest;
 
     use crate::{config::CoreConfig, setup_routes};
 
     const TEST_CONFIG_VALID: &'static str = r#"
 [global]
-server_url = "https://core.idcontact.test.tweede.golf"
+server_url = "https://core.verderhelpen.test.tweede.golf"
 internal_url = "http://core:8000"
 internal_secret = "sample_secret_1234567890178901237890"
-ui_tel_url = "https://poc.idcontact.test.tweede.golf/tel/"
+ui_tel_url = "https://poc.verderhelpen.test.tweede.golf/tel/"
 
 [global.ui_signing_privkey]
 type = "RSA"
@@ -534,7 +534,7 @@ allowed_comm = [ "call" ]
 server_url = ""
 internal_url = "https://example.com/should_not_be_used"
 internal_secret = "sample_secret_1234567890178901237890"
-ui_tel_url = "https://poc.idcontact.test.tweede.golf/tel/"
+ui_tel_url = "https://poc.verderhelpen.test.tweede.golf/tel/"
 
 [global.ui_signing_privkey]
 type = "RSA"

@@ -158,15 +158,15 @@ mod tests {
         providers::{Format, Toml},
         Figment,
     };
-    use id_contact_comm_common::jwt::sign_start_auth_request;
-    use id_contact_jwt::SignKeyConfig;
-    use id_contact_proto::StartRequestAuthOnly;
     use josekit::jws::JwsSigner;
     use rocket::{
         http::{Accept, ContentType},
         local::blocking::Client,
     };
     use serde_json::json;
+    use verder_helpen_comm_common::jwt::sign_start_auth_request;
+    use verder_helpen_jwt::SignKeyConfig;
+    use verder_helpen_proto::StartRequestAuthOnly;
 
     use crate::{setup_routes, start::ClientUrlResponse};
 

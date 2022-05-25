@@ -15,7 +15,7 @@ use start::{session_start, session_start_form, session_start_jwt};
 
 #[launch]
 fn boot() -> _ {
-    id_contact_sentry::SentryLogger::init();
+    verder_helpen_sentry::SentryLogger::init();
 
     let base = setup_routes(rocket::build());
     let config = base.figment().extract::<CoreConfig>().unwrap_or_else(|_| {
@@ -24,7 +24,7 @@ fn boot() -> _ {
         panic!("Failure to parse configuration")
     });
     match config.sentry_dsn() {
-        Some(dsn) => base.attach(id_contact_sentry::SentryFairing::new(dsn, "core")),
+        Some(dsn) => base.attach(verder_helpen_sentry::SentryFairing::new(dsn, "core")),
         None => base,
     }
 }
