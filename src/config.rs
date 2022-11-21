@@ -50,6 +50,7 @@ struct RawCoreConfig {
     server_url: String,
     ui_tel_url: Option<String>,
     ui_signing_privkey: Option<SignKeyConfig>,
+    #[cfg(feature = "sentry")]
     sentry_dsn: Option<String>,
 }
 
@@ -65,6 +66,7 @@ pub struct CoreConfig {
     server_url: String,
     ui_tel_url: Option<String>,
     ui_signer: Option<Box<dyn JwsSigner>>,
+    #[cfg(feature = "sentry")]
     sentry_dsn: Option<String>,
 }
 
@@ -135,6 +137,7 @@ impl From<RawCoreConfig> for CoreConfig {
             }),
             server_url: config.server_url,
             ui_tel_url: config.ui_tel_url,
+            #[cfg(feature = "sentry")]
             sentry_dsn: config.sentry_dsn,
         };
 
@@ -271,6 +274,7 @@ impl CoreConfig {
         self.ui_tel_url.as_ref().map(|v| v.as_ref())
     }
 
+    #[cfg(feature = "sentry")]
     pub fn sentry_dsn(&self) -> Option<&str> {
         self.sentry_dsn.as_deref()
     }

@@ -15,18 +15,23 @@ use start::{session_start, session_start_form, session_start_jwt};
 
 #[launch]
 fn boot() -> _ {
+    #[cfg(feature = "sentry")]
     verder_helpen_sentry::SentryLogger::init();
 
     let base = setup_routes(rocket::build());
+    #[allow(unused_variables)]
     let config = base.figment().extract::<CoreConfig>().unwrap_or_else(|_| {
         // Ignore error value, as it could contain private keys
         log::error!("Failure to parse configuration");
         panic!("Failure to parse configuration")
     });
-    match config.sentry_dsn() {
-        Some(dsn) => base.attach(verder_helpen_sentry::SentryFairing::new(dsn, "core")),
-        None => base,
+
+    #[cfg(feature = "sentry")]
+    if let Some(dsn) = config.sentry_dsn() {
+        base = base.attach(verder_helpen_sentry::SentryFairing::new(dsn, "core"));
     }
+
+    base
 }
 
 fn setup_routes(base: rocket::Rocket<Build>) -> rocket::Rocket<Build> {
