@@ -18,7 +18,9 @@ fn boot() -> _ {
     #[cfg(feature = "sentry")]
     verder_helpen_sentry::SentryLogger::init();
 
-    let base = setup_routes(rocket::build());
+    #[allow(unused_mut)]
+    let mut base = setup_routes(rocket::build());
+
     #[allow(unused_variables)]
     let config = base.figment().extract::<CoreConfig>().unwrap_or_else(|_| {
         // Ignore error value, as it could contain private keys
