@@ -11,16 +11,16 @@ verder-helpen-jwt = { git = "https://github.com/verder-helpen/verder-helpen-jwt.
 verder-helpen-proto = { git = "https://github.com/verder-helpen/verder-helpen-proto.git" }
 josekit = "0.8.1"
 log = "0.4.17"
-reqwest = { version = "0.11.12", features = ["json"] }
+reqwest = { version = "0.11.13", features = ["json"] }
 rocket = { version = "0.5.0-rc.2", features = ["json"] }
-serde = { version = "1.0.147", features = ["derive"] }
-serde_json = "1.0.87"
-serde_yaml = "0.9.14"
+serde = { version = "1.0.151", features = ["derive"] }
+serde_json = "1.0.91"
+serde_yaml = "0.9.16"
 urlencoding = "2.1.2"
 
 [dev-dependencies]
 figment = { version = "0.10.8", features = ["env", "toml", "json"] }
-httpmock = "0.6.6"
+httpmock = "0.6.7"
 tokio-test = "0.4.2"
 
 [dev-dependencies.verder-helpen-comm-common]
