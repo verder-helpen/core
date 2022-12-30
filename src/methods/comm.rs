@@ -1,7 +1,7 @@
-use std::time::Duration;
-
 use super::{Method, Tag};
+
 use serde::Deserialize;
+use std::time::Duration;
 use verder_helpen_proto::{StartCommRequest, StartCommResponse};
 
 fn default_as_false() -> bool {

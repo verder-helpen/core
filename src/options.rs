@@ -1,9 +1,11 @@
-use std::collections::HashMap;
+use crate::{
+    methods::{Method, Tag},
+    {config::CoreConfig, error::Error},
+};
 
-use crate::methods::{Method, Tag};
-use crate::{config::CoreConfig, error::Error};
 use rocket::{serde::json::Json, State};
 use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 
 #[derive(Debug, Serialize, Deserialize)]
 struct MethodProperties {
@@ -98,7 +100,7 @@ mod tests {
     use figment::providers::{Format, Toml};
     use rocket::figment::Figment;
 
-    const TEST_CONFIG_VALID: &'static str = r#"
+    const TEST_CONFIG_VALID: &str = r#"
 [global]
 server_url = "https://core.verderhelpen.test.tweede.golf"
 internal_url = "http://core:8000"

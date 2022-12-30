@@ -1,19 +1,17 @@
-use crate::error::Error;
-use crate::methods::{AuthenticationMethod, CommunicationMethod, Method};
-use crate::start::StartRequestAuthOnly;
-use josekit::jws::JwsVerifier;
-use josekit::jwt::decode_with_verifier_selector;
+use crate::{
+    error::Error,
+    methods::{AuthenticationMethod, CommunicationMethod, Method},
+    start::StartRequestAuthOnly,
+};
 use josekit::{
     jws::{
         alg::hmac::{HmacJwsAlgorithm::Hs256, HmacJwsSigner, HmacJwsVerifier},
-        JwsHeader, JwsSigner,
+        JwsHeader, JwsSigner, JwsVerifier,
     },
-    jwt::{self, JwtPayload, JwtPayloadValidator},
+    jwt::{self, decode_with_verifier_selector, JwtPayload, JwtPayloadValidator},
 };
 use serde::Deserialize;
-use std::collections::HashMap;
-use std::convert::TryFrom;
-use std::fmt::Debug;
+use std::{collections::HashMap, convert::TryFrom, fmt::Debug};
 use verder_helpen_jwt::SignKeyConfig;
 
 #[derive(Debug, Deserialize, Clone)]
@@ -295,7 +293,7 @@ mod tests {
     use crate::{config::TokenSecret, methods::Method};
 
     // Test data
-    const TEST_CONFIG_VALID: &'static str = r#"
+    const TEST_CONFIG_VALID: &str = r#"
 [global]
 server_url = "https://core.verderhelpen.test.tweede.golf"
 internal_url = "http://core:8000"
@@ -394,7 +392,7 @@ allowed_auth = [ "irma" ]
 allowed_comm = [ "call" ]
 
 "#;
-    const TEST_CONFIG_INVALID_METHOD_COMM: &'static str = r#"
+    const TEST_CONFIG_INVALID_METHOD_COMM: &str = r#"
 [global]
 server_url = "https://core.verderhelpen.test.tweede.golf"
 internal_url = "http://core:8000"
@@ -479,7 +477,7 @@ allowed_auth = [ "irma" ]
 allowed_comm = [ "call" ]
 
 "#;
-    const TEST_CONFIG_INVALID_METHOD_AUTH: &'static str = r#"
+    const TEST_CONFIG_INVALID_METHOD_AUTH: &str = r#"
 [global]
 server_url = "https://core.verderhelpen.test.tweede.golf"
 internal_url = "http://core:8000"
@@ -616,47 +614,44 @@ allowed_comm = [ "call" ]
     #[test]
     fn test_get_purpose() {
         let config = config_from_str(TEST_CONFIG_VALID);
-        assert_eq!(
-            config.purpose(&"report_move".to_string()).unwrap().tag,
-            "report_move"
-        );
-        assert!(config.purpose(&"does_not_exist".to_string()).is_err());
+        assert_eq!(config.purpose("report_move").unwrap().tag, "report_move");
+        assert!(config.purpose("does_not_exist").is_err());
     }
 
     #[test]
     fn test_get_comm_method() {
         let config = config_from_str(TEST_CONFIG_VALID);
 
-        let purpose_report_move = config.purpose(&"report_move".to_string()).unwrap();
-        let purpose_request_passport = config.purpose(&"request_passport".to_string()).unwrap();
+        let purpose_report_move = config.purpose("report_move").unwrap();
+        let purpose_request_passport = config.purpose("request_passport").unwrap();
 
         assert_eq!(
             config
-                .comm_method(purpose_report_move, &"call".to_string())
+                .comm_method(purpose_report_move, "call")
                 .unwrap()
                 .tag(),
             "call"
         );
         assert_eq!(
             config
-                .comm_method(purpose_report_move, &"chat".to_string())
+                .comm_method(purpose_report_move, "chat")
                 .unwrap()
                 .tag(),
             "chat"
         );
         assert!(config
-            .comm_method(purpose_report_move, &"does-not-exist".to_string())
+            .comm_method(purpose_report_move, "does-not-exist")
             .is_err());
 
         assert_eq!(
             config
-                .comm_method(purpose_request_passport, &"call".to_string())
+                .comm_method(purpose_request_passport, "call")
                 .unwrap()
                 .tag(),
             "call"
         );
         assert!(config
-            .comm_method(purpose_request_passport, &"chat".to_string())
+            .comm_method(purpose_request_passport, "chat")
             .is_err());
     }
 
@@ -674,36 +669,36 @@ allowed_comm = [ "call" ]
     fn test_get_auth_method() {
         let config = config_from_str(TEST_CONFIG_VALID);
 
-        let purpose_report_move = config.purpose(&"report_move".to_string()).unwrap();
-        let purpose_request_passport = config.purpose(&"request_passport".to_string()).unwrap();
+        let purpose_report_move = config.purpose("report_move").unwrap();
+        let purpose_request_passport = config.purpose("request_passport").unwrap();
 
         assert_eq!(
             config
-                .auth_method(purpose_report_move, &"digid".to_string())
+                .auth_method(purpose_report_move, "digid")
                 .unwrap()
                 .tag(),
             "digid"
         );
         assert_eq!(
             config
-                .auth_method(purpose_report_move, &"irma".to_string())
+                .auth_method(purpose_report_move, "irma")
                 .unwrap()
                 .tag(),
             "irma"
         );
         assert!(config
-            .auth_method(purpose_report_move, &"does-not-exist".to_string())
+            .auth_method(purpose_report_move, "does-not-exist")
             .is_err());
 
         assert_eq!(
             config
-                .auth_method(purpose_request_passport, &"irma".to_string())
+                .auth_method(purpose_request_passport, "irma")
                 .unwrap()
                 .tag(),
             "irma"
         );
         assert!(config
-            .auth_method(purpose_request_passport, &"digid".to_string())
+            .auth_method(purpose_request_passport, "digid")
             .is_err());
     }
 
@@ -719,10 +714,10 @@ allowed_comm = [ "call" ]
         let encoded = config.encode_urlstate(test_map.clone()).unwrap();
         assert_eq!(config.decode_urlstate(encoded).unwrap(), test_map);
 
-        const EXPIRED_JWT: &'static str = "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTYwNjAzODEsImV4cCI6MTYxNjA2MjE4MSwia2V5XzEiOiJ2YWx1ZV8xIiwia2V5XzIiOiJ2YWx1ZV8yIn0.S8YcM93jDJswxGxvmIE763KhabUqODUFX1qr7NFBh30";
+        const EXPIRED_JWT: &str = "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTYwNjAzODEsImV4cCI6MTYxNjA2MjE4MSwia2V5XzEiOiJ2YWx1ZV8xIiwia2V5XzIiOiJ2YWx1ZV8yIn0.S8YcM93jDJswxGxvmIE763KhabUqODUFX1qr7NFBh30";
         assert!(config.decode_urlstate(EXPIRED_JWT.to_string()).is_err());
 
-        const INVALID_JWT: &'static str = "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTYwNjAzODEsImV4cCI6MTYxNjA2MjE4MSwia2V5XzEiOiJ2YWx1ZV8xIiwia2V5XzIiOiJ2YWx1ZV8yIn0.F8YcM93jDJswxGxvmIE763KhabUqODUFX1qr7NFBh30";
+        const INVALID_JWT: &str = "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTYwNjAzODEsImV4cCI6MTYxNjA2MjE4MSwia2V5XzEiOiJ2YWx1ZV8xIiwia2V5XzIiOiJ2YWx1ZV8yIn0.F8YcM93jDJswxGxvmIE763KhabUqODUFX1qr7NFBh30";
         assert!(config.decode_urlstate(INVALID_JWT.to_string()).is_err());
     }
 }
