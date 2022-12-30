@@ -1,19 +1,17 @@
-use crate::error::Error;
-use crate::methods::{AuthenticationMethod, CommunicationMethod, Method};
-use crate::start::StartRequestAuthOnly;
-use josekit::jws::JwsVerifier;
-use josekit::jwt::decode_with_verifier_selector;
+use crate::{
+    error::Error,
+    methods::{AuthenticationMethod, CommunicationMethod, Method},
+    start::StartRequestAuthOnly,
+};
 use josekit::{
     jws::{
         alg::hmac::{HmacJwsAlgorithm::Hs256, HmacJwsSigner, HmacJwsVerifier},
-        JwsHeader, JwsSigner,
+        JwsHeader, JwsSigner, JwsVerifier,
     },
-    jwt::{self, JwtPayload, JwtPayloadValidator},
+    jwt::{self, decode_with_verifier_selector, JwtPayload, JwtPayloadValidator},
 };
 use serde::Deserialize;
-use std::collections::HashMap;
-use std::convert::TryFrom;
-use std::fmt::Debug;
+use std::{collections::HashMap, convert::TryFrom, fmt::Debug};
 use verder_helpen_jwt::SignKeyConfig;
 
 #[derive(Debug, Deserialize, Clone)]

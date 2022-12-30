@@ -1,15 +1,13 @@
-use std::{collections::HashMap, time::Duration};
+use super::{Method, Tag};
+use crate::{config::CoreConfig, error::Error};
 
-use crate::config::CoreConfig;
 use josekit::{
     jws::JwsHeader,
     jwt::{self, JwtPayload},
 };
-
-use super::{Method, Tag};
-use crate::error::Error;
 use rocket::{response::Redirect, State};
 use serde::Deserialize;
+use std::{collections::HashMap, time::Duration};
 use verder_helpen_proto::{StartAuthRequest, StartAuthResponse};
 
 #[derive(Debug, Deserialize, Clone)]
@@ -170,13 +168,13 @@ pub async fn auth_attr_shim(
 
 #[cfg(test)]
 mod tests {
+    use crate::{config::CoreConfig, setup_routes};
+
     use figment::providers::{Format, Toml};
     use httpmock::MockServer;
     use rocket::{figment::Figment, local::blocking::Client};
     use serde_json::json;
     use verder_helpen_proto::StartAuthRequest;
-
-    use crate::{config::CoreConfig, setup_routes};
 
     const TEST_CONFIG_VALID: &str = r#"
 [global]

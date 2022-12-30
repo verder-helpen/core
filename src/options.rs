@@ -1,9 +1,11 @@
-use std::collections::HashMap;
+use crate::{
+    methods::{Method, Tag},
+    {config::CoreConfig, error::Error},
+};
 
-use crate::methods::{Method, Tag};
-use crate::{config::CoreConfig, error::Error};
 use rocket::{serde::json::Json, State};
 use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 
 #[derive(Debug, Serialize, Deserialize)]
 struct MethodProperties {
