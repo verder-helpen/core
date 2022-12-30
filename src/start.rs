@@ -180,10 +180,9 @@ mod tests {
                 Toml::string(&format!(
                     r#"
 [global]
-server_url = ""
-internal_url = ""
+server_url = "https://example.com"
+internal_url = "http://127.0.0.1"
 internal_secret = "sample_secret_1234567890178901237890"
-ui_tel_url = ""
 
 [global.ui_signing_privkey]
 type = "RSA"
@@ -312,10 +311,9 @@ allowed_comm = [ "test" ]
                 Toml::string(&format!(
                     r#"
 [global]
-server_url = ""
-internal_url = ""
+server_url = "https://example.com"
+internal_url = "http://127.0.0.1"
 internal_secret = "sample_secret_1234567890178901237890"
-ui_tel_url = ""
 
 [global.ui_signing_privkey]
 type = "RSA"
@@ -408,10 +406,9 @@ allowed_comm = [ "test" ]
                 Toml::string(&format!(
                     r#"
 [global]
-server_url = ""
-internal_url = ""
+server_url = "https://example.com"
+internal_url = "http://127.0.0.1"
 internal_secret = "sample_secret_1234567890178901237890"
-ui_tel_url = ""
 
 [global.ui_signing_privkey]
 type = "RSA"
@@ -522,10 +519,9 @@ allowed_comm = [ "test" ]
                 Toml::string(&format!(
                     r#"
 [global]
-server_url = ""
-internal_url = ""
+server_url = "https://example.com"
+internal_url = "http://127.0.0.1"
 internal_secret = "sample_secret_1234567890178901237890"
-ui_tel_url = ""
 
 [global.ui_signing_privkey]
 type = "RSA"
@@ -658,10 +654,9 @@ allowed_comm = [ "test" ]
                 Toml::string(&format!(
                     r#"
 [global]
-server_url = ""
-internal_url = ""
+server_url = "https://example.com"
+internal_url = "http://127.0.0.1"
 internal_secret = "sample_secret_1234567890178901237890"
-ui_tel_url = ""
 
 [global.ui_signing_privkey]
 type = "RSA"
@@ -793,10 +788,9 @@ allowed_comm = [ "test" ]
                 Toml::string(&format!(
                     r#"
 [global]
-server_url = ""
-internal_url = ""
+server_url = "https://example.com"
+internal_url = "http://127.0.0.1"
 internal_secret = "sample_secret_1234567890178901237890"
-ui_tel_url = ""
 
 [global.ui_signing_privkey]
 type = "RSA"
@@ -908,10 +902,9 @@ allowed_comm = [ "test" ]
                 Toml::string(&format!(
                     r#"
 [global]
-server_url = ""
-internal_url = ""
+server_url = "https://example.com"
+internal_url = "http://127.0.0.1"
 internal_secret = "sample_secret_1234567890178901237890"
-ui_tel_url = ""
 
 [global.ui_signing_privkey]
 type = "RSA"
@@ -1035,10 +1028,9 @@ allowed_comm = [ "test" ]
                 Toml::string(&format!(
                     r#"
 [global]
-server_url = ""
-internal_url = ""
+server_url = "https://example.com"
+internal_url = "http://127.0.0.1"
 internal_secret = "sample_secret_1234567890178901237890"
-ui_tel_url = ""
 
 [global.ui_signing_privkey]
 type = "RSA"
@@ -1162,10 +1154,9 @@ allowed_comm = [ "test" ]
                 Toml::string(&format!(
                     r#"
 [global]
-server_url = ""
-internal_url = ""
+server_url = "https://example.com"
+internal_url = "http://127.0.0.1"
 internal_secret = "sample_secret_1234567890178901237890"
-ui_tel_url = ""
 
 [global.ui_signing_privkey]
 type = "RSA"
@@ -1289,10 +1280,9 @@ allowed_comm = [ "test" ]
                 Toml::string(&format!(
                     r#"
 [global]
-server_url = ""
-internal_url = ""
+server_url = "https://example.com"
+internal_url = "http://127.0.0.1"
 internal_secret = "sample_secret_1234567890178901237890"
-ui_tel_url = ""
 
 [global.ui_signing_privkey]
 type = "RSA"
@@ -1416,10 +1406,9 @@ allowed_comm = [ "test" ]
                 Toml::string(&format!(
                     r#"
 [global]
-server_url = ""
-internal_url = ""
+server_url = "https://example.com"
+internal_url = "http://127.0.0.1"
 internal_secret = "sample_secret_1234567890178901237890"
-ui_tel_url = ""
 
 [global.ui_signing_privkey]
 type = "RSA"
@@ -1543,10 +1532,9 @@ allowed_comm = [ "test" ]
                 Toml::string(&format!(
                     r#"
 [global]
-server_url = ""
-internal_url = ""
+server_url = "https://example.com"
+internal_url = "http://127.0.0.1"
 internal_secret = "sample_secret_1234567890178901237890"
-ui_tel_url = ""
 
 [global.ui_signing_privkey]
 type = "RSA"
@@ -1670,10 +1658,9 @@ allowed_comm = [ "test" ]
                 Toml::string(&format!(
                     r#"
 [global]
-server_url = ""
-internal_url = ""
+server_url = "https://example.com"
+internal_url = "http://127.0.0.1"
 internal_secret = "sample_secret_1234567890178901237890"
-ui_tel_url = ""
 
 [global.ui_signing_privkey]
 type = "RSA"

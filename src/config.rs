@@ -12,6 +12,7 @@ use josekit::{
 };
 use serde::Deserialize;
 use std::{collections::HashMap, convert::TryFrom, fmt::Debug};
+use url::Url;
 use verder_helpen_jwt::SignKeyConfig;
 
 #[derive(Debug, Deserialize, Clone)]
@@ -45,8 +46,8 @@ struct RawCoreConfig {
     purposes: Vec<Purpose>,
     authonly_request_keys: HashMap<String, SignKeyConfig>,
     internal_secret: TokenSecret,
-    server_url: String,
-    ui_tel_url: Option<String>,
+    server_url: Url,
+    ui_tel_url: Option<Url>,
     ui_signing_privkey: Option<SignKeyConfig>,
     #[cfg(feature = "sentry")]
     sentry_dsn: Option<String>,
@@ -61,8 +62,8 @@ pub struct CoreConfig {
     authonly_request_keys: HashMap<String, Box<dyn JwsVerifier>>,
     internal_signer: HmacJwsSigner,
     internal_verifier: HmacJwsVerifier,
-    server_url: String,
-    ui_tel_url: Option<String>,
+    server_url: Url,
+    ui_tel_url: Option<Url>,
     ui_signer: Option<Box<dyn JwsSigner>>,
     #[cfg(feature = "sentry")]
     sentry_dsn: Option<String>,
@@ -264,7 +265,7 @@ impl CoreConfig {
         )?)
     }
 
-    pub fn server_url(&self) -> &str {
+    pub fn server_url(&self) -> &Url {
         &self.server_url
     }
 
