@@ -98,7 +98,7 @@ mod tests {
     use figment::providers::{Format, Toml};
     use rocket::figment::Figment;
 
-    const TEST_CONFIG_VALID: &'static str = r#"
+    const TEST_CONFIG_VALID: &str = r#"
 [global]
 server_url = "https://core.verderhelpen.test.tweede.golf"
 internal_url = "http://core:8000"

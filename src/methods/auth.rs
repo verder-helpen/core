@@ -178,7 +178,7 @@ mod tests {
 
     use crate::{config::CoreConfig, setup_routes};
 
-    const TEST_CONFIG_VALID: &'static str = r#"
+    const TEST_CONFIG_VALID: &str = r#"
 [global]
 server_url = "https://core.verderhelpen.test.tweede.golf"
 internal_url = "http://core:8000"
@@ -314,7 +314,7 @@ allowed_comm = [ "call" ]
         };
 
         let result = tokio_test::block_on(method.start(
-            &vec!["email".into()],
+            &["email".into()],
             "https://example.com/continuation",
             &Some("https://example.com/attr_url".into()),
             &config,
@@ -359,7 +359,7 @@ allowed_comm = [ "call" ]
         };
 
         let result = tokio_test::block_on(method.start(
-            &vec!["email".into()],
+            &["email".into()],
             "https://example.com/continuation",
             &None,
             &config,
@@ -385,7 +385,7 @@ allowed_comm = [ "call" ]
                     if let Some(body) = &req.body {
                         let body = serde_json::from_slice::<StartAuthRequest>(body);
                         if let Ok(body) = body {
-                            body.attr_url == None
+                            body.attr_url.is_none()
                                 && body.continuation != "https://example.com/continuation"
                                 && body.attributes == vec!["email"]
                         } else {
@@ -412,7 +412,7 @@ allowed_comm = [ "call" ]
         };
 
         let result = tokio_test::block_on(method.start(
-            &vec!["email".into()],
+            &["email".into()],
             "https://example.com/continuation",
             &Some("https://example.com/attr_url".into()),
             &config,
@@ -465,7 +465,7 @@ allowed_comm = [ "call" ]
         };
 
         let result = tokio_test::block_on(method.start(
-            &vec!["email".into()],
+            &["email".into()],
             "tel:0123456789",
             &Some("https://example.com/attr_url".into()),
             &config,
@@ -511,7 +511,7 @@ allowed_comm = [ "call" ]
         };
 
         let result = tokio_test::block_on(method.start(
-            &vec!["email".into()],
+            &["email".into()],
             "https://example.com/continuation",
             &Some("https://example.com/attr_url".into()),
             &config,
@@ -622,7 +622,7 @@ allowed_comm = [ "test" ]
                             unsafe {
                                 ESCAPE_HATCH = Some(body.continuation.clone());
                             }
-                            body.attr_url == None
+                            body.attr_url.is_none()
                                 && body.continuation != "https://example.com/continuation"
                                 && body.attributes == vec!["email"]
                         } else {
@@ -648,7 +648,7 @@ allowed_comm = [ "test" ]
 
         // Do start request
         let result = tokio_test::block_on(config.auth_methods["test"].start(
-            &vec!["email".into()],
+            &["email".into()],
             "https://example.com/continuation",
             &Some(format!("{}/attr_url", server.base_url())),
             &config,
@@ -667,7 +667,7 @@ allowed_comm = [ "test" ]
         assert_eq!(response.status(), rocket::http::Status::SeeOther);
         assert_eq!(
             response.headers().get_one("Location"),
-            Some("https://example.com/continuation".into())
+            Some("https://example.com/continuation")
         );
     }
 }
