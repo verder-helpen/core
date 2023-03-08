@@ -22,9 +22,9 @@ fn boot() -> _ {
     let mut base = setup_routes(rocket::build());
 
     #[allow(unused_variables)]
-    let config = base.figment().extract::<CoreConfig>().unwrap_or_else(|_| {
+    let config = base.figment().extract::<CoreConfig>().unwrap_or_else(|e| {
         // Ignore error value, as it could contain private keys
-        log::error!("Failure to parse configuration");
+        log::error!("Failure to parse configuration {e}");
         panic!("Failure to parse configuration")
     });
 
