@@ -1,8 +1,9 @@
-use super::{Method, Tag};
+use std::time::Duration;
 
 use serde::Deserialize;
-use std::time::Duration;
 use verder_helpen_proto::{StartCommRequest, StartCommResponse};
+
+use super::{Method, Tag};
 
 fn default_as_false() -> bool {
     false
@@ -87,7 +88,8 @@ impl CommunicationMethod {
         }
     }
 
-    // Start a communication session for which we already have authentication results.
+    // Start a communication session for which we already have authentication
+    // results.
     pub async fn start_with_auth_result(
         &self,
         purpose: &str,

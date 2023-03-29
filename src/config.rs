@@ -1,8 +1,5 @@
-use crate::{
-    error::Error,
-    methods::{AuthenticationMethod, CommunicationMethod, Method},
-    start::StartRequestAuthOnly,
-};
+use std::{collections::HashMap, convert::TryFrom, fmt::Debug};
+
 use josekit::{
     jws::{
         alg::hmac::{HmacJwsAlgorithm::Hs256, HmacJwsSigner, HmacJwsVerifier},
@@ -11,8 +8,13 @@ use josekit::{
     jwt::{self, decode_with_verifier_selector, JwtPayload, JwtPayloadValidator},
 };
 use serde::Deserialize;
-use std::{collections::HashMap, convert::TryFrom, fmt::Debug};
 use verder_helpen_jwt::SignKeyConfig;
+
+use crate::{
+    error::Error,
+    methods::{AuthenticationMethod, CommunicationMethod, Method},
+    start::StartRequestAuthOnly,
+};
 
 #[derive(Debug, Deserialize, Clone)]
 pub struct Purpose {
@@ -661,8 +663,16 @@ allowed_comm = [ "call" ]
         assert_eq!(format!("{:?}", test_token), "TokenSecret");
 
         let config = config_from_str(TEST_CONFIG_VALID);
-        assert_eq!(format!("{:?}", config.internal_signer), "HmacJwsSigner { algorithm: Hs256, private_key: PKey { algorithm: \"HMAC\" }, key_id: None }");
-        assert_eq!(format!("{:?}", config.internal_verifier), "HmacJwsVerifier { algorithm: Hs256, private_key: PKey { algorithm: \"HMAC\" }, key_id: None }");
+        assert_eq!(
+            format!("{:?}", config.internal_signer),
+            "HmacJwsSigner { algorithm: Hs256, private_key: PKey { algorithm: \"HMAC\" }, key_id: \
+             None }"
+        );
+        assert_eq!(
+            format!("{:?}", config.internal_verifier),
+            "HmacJwsVerifier { algorithm: Hs256, private_key: PKey { algorithm: \"HMAC\" }, \
+             key_id: None }"
+        );
     }
 
     #[test]

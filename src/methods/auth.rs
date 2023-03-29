@@ -1,5 +1,4 @@
-use super::{Method, Tag};
-use crate::{config::CoreConfig, error::Error};
+use std::{collections::HashMap, time::Duration};
 
 use josekit::{
     jws::JwsHeader,
@@ -7,8 +6,10 @@ use josekit::{
 };
 use rocket::{response::Redirect, State};
 use serde::Deserialize;
-use std::{collections::HashMap, time::Duration};
 use verder_helpen_proto::{StartAuthRequest, StartAuthResponse};
+
+use super::{Method, Tag};
+use crate::{config::CoreConfig, error::Error};
 
 #[derive(Debug, Deserialize, Clone)]
 pub struct AuthenticationMethod {
@@ -168,13 +169,13 @@ pub async fn auth_attr_shim(
 
 #[cfg(test)]
 mod tests {
-    use crate::{config::CoreConfig, setup_routes};
-
     use figment::providers::{Format, Toml};
     use httpmock::MockServer;
     use rocket::{figment::Figment, local::blocking::Client};
     use serde_json::json;
     use verder_helpen_proto::StartAuthRequest;
+
+    use crate::{config::CoreConfig, setup_routes};
 
     const TEST_CONFIG_VALID: &str = r#"
 [global]

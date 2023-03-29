@@ -1,11 +1,13 @@
-use crate::{
-    methods::{Method, Tag},
-    {config::CoreConfig, error::Error},
-};
+use std::collections::HashMap;
 
 use rocket::{serde::json::Json, State};
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
+
+use crate::{
+    config::CoreConfig,
+    error::Error,
+    methods::{Method, Tag},
+};
 
 #[derive(Debug, Serialize, Deserialize)]
 struct MethodProperties {
@@ -93,12 +95,11 @@ pub fn session_options(
 
 #[cfg(test)]
 mod tests {
-    use rocket::{http::Status, local::blocking::Client};
+    use figment::providers::{Format, Toml};
+    use rocket::{figment::Figment, http::Status, local::blocking::Client};
 
     use super::SessionOptions;
     use crate::setup_routes;
-    use figment::providers::{Format, Toml};
-    use rocket::figment::Figment;
 
     const TEST_CONFIG_VALID: &str = r#"
 [global]
