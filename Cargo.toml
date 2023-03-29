@@ -11,11 +11,11 @@ verder-helpen-jwt = { git = "https://github.com/verder-helpen/verder-helpen-jwt.
 verder-helpen-proto = { git = "https://github.com/verder-helpen/verder-helpen-proto.git" }
 josekit = "0.8.2"
 log = "0.4.17"
-reqwest = { version = "0.11.14", features = ["json"] }
-rocket = { version = "0.5.0-rc.2", features = ["json"] }
-serde = { version = "1.0.152", features = ["derive"] }
-serde_json = "1.0.93"
-serde_yaml = "0.9.17"
+reqwest = { version = "0.11.16", features = ["json"] }
+rocket = { version = "0.5.0-rc.3", features = ["json"] }
+serde = { version = "1.0.159", features = ["derive"] }
+serde_json = "1.0.95"
+serde_yaml = "0.9.19"
 urlencoding = "2.1.2"
 
 [dev-dependencies]
