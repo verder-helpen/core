@@ -1,13 +1,13 @@
-use crate::error::Error;
-use crate::{config::CoreConfig, methods::Tag};
-use rocket::serde::json::Json;
 use rocket::{
     form::Form,
     http::Status,
     response::{Redirect, Responder},
+    serde::json::Json,
     Request, Response, State,
 };
 use serde::{Deserialize, Serialize};
+
+use crate::{config::CoreConfig, error::Error, methods::Tag};
 
 #[derive(Debug, Deserialize, FromForm)]
 pub struct StartRequestFull {
@@ -66,7 +66,8 @@ pub async fn session_start(
     choices: String,
     config: &State<CoreConfig>,
 ) -> Result<ClientUrlResponse, Error> {
-    // Workaround for issue where matching routes based on json body structure does not works as expected
+    // Workaround for issue where matching routes based on json body structure does
+    // not works as expected
     if let Ok(start_request) = serde_json::from_str::<StartRequestFull>(&choices) {
         session_start_full(start_request, config).await
     } else if let Ok(c) = serde_json::from_str::<StartRequestCommOnly>(&choices) {
