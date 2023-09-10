@@ -101,7 +101,7 @@ allowed_auth = [ "*" ]
 allowed_comm = [ "call" ]
 
 [[global.purposes]]
-tag = "notice_of_marriage"
+tag = "personal_question"
 attributes = [ "email" ]
 allowed_auth = [ "*" ]
 allowed_comm = [ ]
