@@ -33,17 +33,17 @@ impl<'r, 'o: 'r> rocket::response::Responder<'r, 'o> for Error {
     fn respond_to(self, request: &'r rocket::Request<'_>) -> rocket::response::Result<'o> {
         match self {
             Error::NoSuchMethod(m) => {
-                let bad_request = rocket::response::status::BadRequest::<()>(None);
+                let bad_request = rocket::response::status::BadRequest::<Option<()>>(None);
                 log::error!("Unknown method {}", m);
                 bad_request.respond_to(request)
             }
             Error::NoSuchPurpose(m) => {
-                let bad_request = rocket::response::status::BadRequest::<()>(None);
+                let bad_request = rocket::response::status::BadRequest::<Option<()>>(None);
                 log::error!("Unknown purpose {}", m);
                 bad_request.respond_to(request)
             }
             Error::BadRequest => {
-                let bad_request = rocket::response::status::BadRequest::<()>(None);
+                let bad_request = rocket::response::status::BadRequest::<Option<()>>(None);
                 bad_request.respond_to(request)
             }
             _ => {
