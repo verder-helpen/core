@@ -9,21 +9,21 @@ resolver = "2"
 verder-helpen-sentry = { git = "https://github.com/verder-helpen/verder-helpen-sentry.git", optional = true }
 verder-helpen-jwt = { git = "https://github.com/verder-helpen/verder-helpen-jwt.git" }
 verder-helpen-proto = { git = "https://github.com/verder-helpen/verder-helpen-proto.git" }
-josekit = "0.8.3"
-log = "0.4.18"
-reqwest = { version = "0.11.18", features = ["json"] }
-rocket = { version = "0.5.0-rc.3", features = ["json"] }
-serde = { version = "1.0.163", features = ["derive"] }
-serde_json = "1.0.96"
+josekit = "0.8.4"
+log = "0.4.20"
+reqwest = { version = "0.11.22", features = ["json"] }
+rocket = { version = "0.5.0", features = ["json"] }
+serde = { version = "1.0.193", features = ["derive"] }
+serde_json = "1.0.108"
 
 [dev-dependencies]
-figment = { version = "0.10.10", features = ["env", "toml", "json"] }
-httpmock = "0.6.7"
-tokio-test = "0.4.2"
+figment = { version = "0.10.12", features = ["env", "toml", "json"] }
+httpmock = "0.6.8"
+tokio-test = "0.4.3"
 
 [dev-dependencies.verder-helpen-comm-common]
 git = "https://github.com/verder-helpen/comm-common.git"
-rev = "694e0e37d8491701b923d579409dcf7025bbcf76"
+rev = "29a7c83cc3a3856c0da67f75f48ef5becb77af12"
 features = ["auth_during_comm"]
 
 [features]
